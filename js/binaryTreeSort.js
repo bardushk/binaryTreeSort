@@ -1,8 +1,5 @@
-var array = [10, 2, 4, 24, 15]; 
-
 $(document).ready(function(){
-	var tree = new BinaryTree(array);
-	tree.render($('#container'));
+	var tree = new BinaryTree(30, $('#container'));
 });
 
 // Класс узла дерева
@@ -42,14 +39,26 @@ function Node(root){
 
 // Класс бинарного дерева
 //
-function BinaryTree(array){	
-	if(!$.isArray(array)) return;
-	var tree = new Node(array[0]);
-	for(var index = 1; index < array.length; index++ ){
-		tree.addNode(array[index]);
+function BinaryTree(count, container){	
+	var array = [];
+	for(var index = 0; index < count; index++){
+		array.push(Math.round(Math.random() * 100));
 	}
+	
+	var tree = new Node(array[0]);
+	console.log(array);
+	var index = 0;
+	var that = this;
+	var intervalId = setInterval(function(){ 
+		if( index == array.length) { 
+			clearInterval(intervalId); 
+			alert('done'); 
+			return;
+		}
+		tree.addNode(array[index++]); 
+		that.render(container); 
+	}, 200);
 	this.render = function(container){
-	debugger;
 		container.html('');
 		tree.render(container);
 	}
